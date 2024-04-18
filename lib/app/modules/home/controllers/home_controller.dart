@@ -100,6 +100,7 @@ class HomeController extends GetxController {
         if (value != null && value.responseCode == 200) {
           Get.snackbar(
               'Successfully Updated!', 'Profile updated successfully!');
+          fetchUserList();
           Get.offAll(() => const HomeView());
         }
       },
