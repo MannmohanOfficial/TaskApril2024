@@ -9,6 +9,19 @@ class UserRepository {
     return await APIProvider.instance.get('${APIEndpoints.userList}page=$page&per_page=$perPage');
   }
 
+  Future<AppResponse?> addUserDetails( {required String name,
+  required String email,
+  required String gender,
+  required String status,
+}) async {
+    return await APIProvider.instance.post(APIEndpoints.createUser, {
+      'name': name,
+      'email': email,
+      'gender': gender,
+      'status': status
+    });
+  }
+
   Future<AppResponse?> getUserDetails(userId) async {
     return await APIProvider.instance.get('${APIEndpoints.rudUsers}$userId');
   }

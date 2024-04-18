@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../modules/add_user/bindings/add_user_binding.dart';
+import '../modules/add_user/views/add_user_view.dart';
 import '../modules/details/bindings/details_binding.dart';
 import '../modules/details/views/details_view.dart';
 import '../modules/edit/bindings/edit_binding.dart';
@@ -29,6 +31,11 @@ class AppPages {
       name: _Paths.EDIT,
       page: () => const EditView(),
       binding: EditBinding(),
+    ),
+    GetPage(
+      name: _Paths.ADD_USER,
+      page: () => const AddUserView(),
+      binding: AddUserBinding(),
     ),
   ];
 }

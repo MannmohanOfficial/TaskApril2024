@@ -21,13 +21,18 @@ class HomeController extends GetxController {
   late TextEditingController genderController;
   late TextEditingController statusController;
 
+  TextEditingController userNameController = TextEditingController();
+  TextEditingController userEmailController = TextEditingController();
+  TextEditingController userGenderController = TextEditingController();
+  TextEditingController userStatusController = TextEditingController();
+
   @override
   void onInit() {
     log('Home Controller called');
-    nameController =TextEditingController();
-    emailController =TextEditingController();
-    genderController =TextEditingController();
-    statusController =TextEditingController();
+    nameController = TextEditingController();
+    emailController = TextEditingController();
+    genderController = TextEditingController();
+    statusController = TextEditingController();
     super.onInit();
   }
 
@@ -48,7 +53,7 @@ class HomeController extends GetxController {
 
   Future<void> editUserdata(userId) async {
     userRepository.getUserDetails(userId).then(
-          (value) {
+      (value) {
         if (value != null) {
           userData = UserModel.fromJson(value.responseBody);
           nameController.text = userData.name!;
@@ -57,7 +62,7 @@ class HomeController extends GetxController {
           statusController.text = userData.status!;
           update();
           Get.to(
-                () => const EditView(),
+            () => const EditView(),
           );
         }
       },
@@ -74,7 +79,7 @@ class HomeController extends GetxController {
           genderController.text = userData.gender!;
           statusController.text = userData.status!;
           Get.to(
-              () => const DetailsView(),
+            () => const DetailsView(),
           );
         }
       },
@@ -82,18 +87,54 @@ class HomeController extends GetxController {
   }
 
   Future<void> updateUser(userId) async {
-    userRepository.updateUserDetails(
-        userId,
-        name: nameController.text.trim(),
-        email: emailController.text.trim(),
-        gender: genderController.text.trim(),
-        status: statusController.text.trim(),
-    ).then((value) {
-      if (value != null && value.responseCode == 200) {
-        Get.snackbar('Successfully Updated!', 'Profile updated successfully!');
-        Get.offAll(() => const HomeView());
-      }
-    },);
+    userRepository
+        .updateUserDetails(
+      userId,
+      name: nameController.text.trim(),
+      email: emailController.text.trim(),
+      gender: genderController.text.trim(),
+      status: statusController.text.trim(),
+    )
+        .then(
+      (value) {
+        if (value != null && value.responseCode == 200) {
+          Get.snackbar(
+              'Successfully Updated!', 'Profile updated successfully!');
+          Get.offAll(() => const HomeView());
+        }
+      },
+    );
+  }
+
+  Future<void> deleteUser(userId) async {
+    userRepository.deleteUser(userId).then(
+      (value) {
+        if (value != null && value.responseCode == 204) {
+          Get.snackbar(
+              'Successfully Deleted!', 'Profile deleted successfully!');
+          fetchUserList();
+        }
+      },
+    );
+  }
+
+  Future<void> addUser() async {
+    userRepository
+        .addUserDetails(
+      name: userNameController.text.trim(),
+      email: userEmailController.text.trim(),
+      gender: userGenderController.text.trim(),
+      status: userStatusController.text.trim(),
+    )
+        .then(
+      (value) {
+        if (value != null && value.responseCode == 201) {
+          Get.snackbar('Added Updated!', 'Profile added successfully!');
+          fetchUserList();
+          Get.offAll(() => const HomeView());
+        }
+      },
+    );
   }
 
   void loadUserList() {
