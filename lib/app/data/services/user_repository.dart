@@ -8,4 +8,8 @@ class UserRepository {
   Future<AppResponse?> getUserList(int page, int perPage) async {
     return await APIProvider.instance.get('${APIEndpoints.userList}page=$page&per_page=$perPage');
   }
+
+  Future<AppResponse?> getUserDetails(userId) async {
+    return await APIProvider.instance.get('${APIEndpoints.rudUsers}$userId');
+  }
 }
