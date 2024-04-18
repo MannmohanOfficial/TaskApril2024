@@ -1,11 +1,14 @@
 import 'dart:convert';
 import 'dart:developer';
 
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get/get_rx/get_rx.dart';
 import 'package:user_list/app/data/models/user_model.dart';
 import 'package:user_list/app/data/services/user_repository.dart';
 import 'package:user_list/app/modules/details/views/details_view.dart';
+import 'package:user_list/app/modules/edit/views/edit_view.dart';
+import 'package:user_list/app/modules/home/views/home_view.dart';
 import 'package:user_list/app/routes/app_pages.dart';
 
 class HomeController extends GetxController {
@@ -13,10 +16,18 @@ class HomeController extends GetxController {
 
   final pageCount = 0.obs;
   final perPage = 5.obs;
+  late TextEditingController nameController;
+  late TextEditingController emailController;
+  late TextEditingController genderController;
+  late TextEditingController statusController;
 
   @override
   void onInit() {
     log('Home Controller called');
+    nameController =TextEditingController();
+    emailController =TextEditingController();
+    genderController =TextEditingController();
+    statusController =TextEditingController();
     super.onInit();
   }
 
@@ -35,17 +46,54 @@ class HomeController extends GetxController {
     });
   }
 
+  Future<void> editUserdata(userId) async {
+    userRepository.getUserDetails(userId).then(
+          (value) {
+        if (value != null) {
+          userData = UserModel.fromJson(value.responseBody);
+          nameController.text = userData.name!;
+          emailController.text = userData.email!;
+          genderController.text = userData.gender!;
+          statusController.text = userData.status!;
+          update();
+          Get.to(
+                () => const EditView(),
+          );
+        }
+      },
+    );
+  }
+
   Future<void> getUserdata(userId) async {
     userRepository.getUserDetails(userId).then(
       (value) {
         if (value != null) {
           userData = UserModel.fromJson(value.responseBody);
+          nameController.text = userData.name!;
+          emailController.text = userData.email!;
+          genderController.text = userData.gender!;
+          statusController.text = userData.status!;
           Get.to(
               () => const DetailsView(),
           );
         }
       },
     );
+  }
+
+  Future<void> updateUser(userId) async {
+    userRepository.updateUserDetails(
+        userId,
+        name: nameController.text.trim(),
+        email: emailController.text.trim(),
+        gender: genderController.text.trim(),
+        status: statusController.text.trim(),
+    ).then((value) {
+      if (value != null && value.responseCode == 200) {
+        Get.snackbar('Successfully Updated!', 'Profile updated successfully!');
+        Get.offAll(() => const HomeView());
+      }
+    },);
   }
 
   void loadUserList() {

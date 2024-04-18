@@ -66,6 +66,31 @@ class APIProvider {
     }
   }
 
+  Future<AppResponse> put(String endPoint, dynamic body) async {
+    try {
+      final response = await _client.put(endPoint, data: body);
+      return handleAPIResponse(response);
+    } on DioException catch (e, st) {
+      if (e.type == DioExceptionType.connectionTimeout) {
+        // SnackbarUtils.instance.failureSnackbar("Connection timed out");
+        g.Get.snackbar('Time Out', 'Connection timed out');
+      }
+
+      return handleAPIException(e, st);
+    } catch (e, stackTrace) {
+      return handleAPIException(e, stackTrace);
+    }
+  }
+
+  Future<AppResponse> delete(String endPoint) async {
+    try {
+      final response = await _client.delete(endPoint);
+      return handleAPIResponse(response);
+    } catch (e, stackTrace) {
+      return handleAPIException(e, stackTrace);
+    }
+  }
+
   AppResponse handleAPIResponse(Response response) {
     if (response.statusCode == 200) {
       // if (response.data['status'] != null) {

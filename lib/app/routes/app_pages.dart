@@ -2,6 +2,8 @@ import 'package:get/get.dart';
 
 import '../modules/details/bindings/details_binding.dart';
 import '../modules/details/views/details_view.dart';
+import '../modules/edit/bindings/edit_binding.dart';
+import '../modules/edit/views/edit_view.dart';
 import '../modules/home/bindings/home_binding.dart';
 import '../modules/home/views/home_view.dart';
 
@@ -22,6 +24,11 @@ class AppPages {
       name: _Paths.DETAILS,
       page: () => const DetailsView(),
       binding: DetailsBinding(),
+    ),
+    GetPage(
+      name: _Paths.EDIT,
+      page: () => const EditView(),
+      binding: EditBinding(),
     ),
   ];
 }

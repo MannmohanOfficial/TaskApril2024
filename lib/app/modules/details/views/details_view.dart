@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:user_list/app/modules/edit/views/edit_view.dart';
 import 'package:user_list/app/modules/home/controllers/home_controller.dart';
 
 import '../controllers/details_controller.dart';
@@ -12,7 +13,26 @@ class DetailsView extends GetView<DetailsController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+      bottomNavigationBar: InkWell(
+        onTap: () => Get.to(() => const EditView()),
+        child: Container(
+          height: 50.0.h,
+          decoration: BoxDecoration(
+            color: const Color(0xFF304FFF),
+            borderRadius: BorderRadius.circular(4.0.dm)
+          ),
+          child: Center(
+            child: Text(
+              'Edit Profile',
+              style: GoogleFonts.inter(
+                fontSize: 12.0,
+                fontWeight: FontWeight.w600,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ).paddingOnly(left: 18.0.w, right: 18.0.w, bottom: 18.0.h),
+      ),
       body: GetBuilder<HomeController>(
         builder: (homeController) {
           return Stack(
@@ -137,6 +157,7 @@ class DetailsView extends GetView<DetailsController> {
                         )
                       ],
                     ),
+                    SizedBox(height: 29.0.h),
                     Row(
                       children: [
                         Container(
@@ -176,6 +197,7 @@ class DetailsView extends GetView<DetailsController> {
                         )
                       ],
                     ),
+                    SizedBox(height: 29.0.h),
                     Row(
                       children: [
                         Container(
@@ -187,7 +209,7 @@ class DetailsView extends GetView<DetailsController> {
                             shape: BoxShape.circle,
                           ),
                           child: Image.asset(
-                            'assets/icons/Envelope.png',
+                            'assets/icons/ExclamationMark.png',
 
                           ),
                         ),
@@ -196,7 +218,7 @@ class DetailsView extends GetView<DetailsController> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              'Email',
+                              'Status',
                               style: GoogleFonts.poppins(
                                   fontSize: 12.0,
                                   fontWeight: FontWeight.w500,
@@ -204,7 +226,7 @@ class DetailsView extends GetView<DetailsController> {
                               ),
                             ),
                             Text(
-                              '${homeController.userData.email}',
+                              '${homeController.userData.status}',
                               style: GoogleFonts.inter(
                                   fontSize: 14.0,
                                   fontWeight: FontWeight.normal,

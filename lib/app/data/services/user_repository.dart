@@ -12,4 +12,21 @@ class UserRepository {
   Future<AppResponse?> getUserDetails(userId) async {
     return await APIProvider.instance.get('${APIEndpoints.rudUsers}$userId');
   }
+
+  Future<AppResponse?> updateUserDetails(userId, {required String name,
+  required String email,
+  required String gender,
+  required String status,
+}) async {
+    return await APIProvider.instance.put('${APIEndpoints.rudUsers}$userId', {
+      'name': name,
+      'email': email,
+      'gender': gender,
+      'status': status
+    });
+  }
+
+  Future<AppResponse?> deleteUser(userId) async {
+    return await APIProvider.instance.delete('${APIEndpoints.rudUsers}$userId');
+  }
 }

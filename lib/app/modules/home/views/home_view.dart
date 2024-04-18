@@ -7,6 +7,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:user_list/app/modules/details/views/details_view.dart';
+import 'package:user_list/app/modules/edit/views/edit_view.dart';
 import 'package:user_list/app/routes/app_pages.dart';
 
 import '../controllers/home_controller.dart';
@@ -141,7 +142,9 @@ class HomeView extends GetView<HomeController> {
                                Row(
                                  children: [
                                    InkWell(
-                                     onTap: () {},
+                                     onTap: () {
+                                       homeController.editUserdata(homeController.users[index].id);
+                                     },
                                      child: Container(
                                        height: 32.0.h,
                                        width: 75.0.w,
