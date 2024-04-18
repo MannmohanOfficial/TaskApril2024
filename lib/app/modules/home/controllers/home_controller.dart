@@ -38,13 +38,17 @@ class HomeController extends GetxController {
 
   final userRepository = UserRepository.instance;
   RxList<UserModel> users = <UserModel>[].obs;
+  RxBool isLoading = false.obs;
   var userData = UserModel();
 
   Future<void> fetchUserList() async {
+    isLoading(true);
     userRepository.getUserList(pageCount.value, perPage.value).then((value) {
       if (value != null) {
         final response = jsonEncode(value.responseBody);
         users(userModelFromJson(response));
+        isLoading(false);
+        update();
         log("Type: ${response.runtimeType}");
         log("Length: ${users.length}");
       }
@@ -62,13 +66,13 @@ class HomeController extends GetxController {
           statusController.text = userData.status!;
           if (from == "view") {
             Get.to(
-                  () => const DetailsView(),
+              () => const DetailsView(),
             );
           } else {
             Get.to(
-                    () => const EditView(),);
+              () => const EditView(),
+            );
           }
-
         }
       },
     );

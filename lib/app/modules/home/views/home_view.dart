@@ -117,205 +117,218 @@ class HomeView extends GetView<HomeController> {
                 return SizedBox(
                   height: 601.0.h,
                   child: SingleChildScrollView(
-                    child: Column(
-                      children: [
-                        ...List.generate(
-                          homeController.users.length,
-                          (index) {
-                            return Column(
-                              children: [
-                                Row(
-                                  children: [
-                                    Container(
-                                      height: 45.h,
-                                      width: 45.w,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: const Color(0xFF304FFF)
-                                            .withOpacity(.11),
-                                      ),
-                                    ),
-                                    SizedBox(width: 15.0.w),
-                                    Text(
-                                      '${homeController.users[index].name}',
-                                      style: GoogleFonts.poppins(
-                                        textStyle: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w500,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                Row(
-                                  children: [
-                                    InkWell(
-                                      onTap: () {
-                                        homeController.getUserdata(
-                                            homeController.users[index].id, "edit");
-                                      },
-                                      child: Container(
-                                        height: 32.0.h,
-                                        width: 75.0.w,
-                                        padding: const EdgeInsets.all(8.0),
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: const Color(0xFF304FFF)
-                                                .withOpacity(.10),
-                                          ),
-                                          borderRadius:
-                                              BorderRadius.circular(5.0),
-                                        ),
-                                        child: Row(
-                                          children: [
-                                            Image.asset(
-                                              'assets/icons/PencilSimple.png',
-                                              height: 16.0.h,
-                                              width: 16.0.w,
+                    child: homeController.isLoading.isTrue
+                        ? const Center(
+                            child: CircularProgressIndicator(),
+                          )
+                        : Column(
+                            children: [
+                              ...List.generate(
+                                homeController.users.length,
+                                (index) {
+                                  return Column(
+                                    children: [
+                                      Row(
+                                        children: [
+                                          Container(
+                                            height: 45.h,
+                                            width: 45.w,
+                                            decoration: BoxDecoration(
+                                              shape: BoxShape.circle,
+                                              color: const Color(0xFF304FFF)
+                                                  .withOpacity(.11),
                                             ),
-                                            SizedBox(width: 10.0.w),
-                                            Text(
-                                              'Edit',
-                                              style: GoogleFonts.poppins(
-                                                  fontWeight: FontWeight.normal,
-                                                  fontSize: 14,
-                                                  color: Colors.black
-                                                      .withOpacity(.65)),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(width: 15.0.w),
-                                    InkWell(
-                                      onTap: () {
-                                        homeController.getUserdata(
-                                            homeController.users[index].id, "view");
-                                      },
-                                      child: Container(
-                                        height: 32.0.h,
-                                        width: 75.0.w,
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 12.0.w,
-                                            vertical: 8.0.h),
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: const Color(0xFF304FFF)
-                                                .withOpacity(.10),
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(5.0),
-                                        ),
-                                        child: Row(
-                                          children: [
-                                            Image.asset(
-                                              'assets/icons/Eye.png',
-                                              height: 16.0.h,
-                                              width: 16.0.w,
+                                          SizedBox(width: 15.0.w),
+                                          Text(
+                                            '${homeController.users[index].name}',
+                                            style: GoogleFonts.poppins(
+                                              textStyle: const TextStyle(
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w500,
+                                              ),
                                             ),
-                                            SizedBox(width: 10.0.w),
-                                            Text(
-                                              'View',
-                                              style: GoogleFonts.poppins(
-                                                  fontWeight: FontWeight.normal,
-                                                  fontSize: 14,
-                                                  color: Colors.black
-                                                      .withOpacity(.65)),
-                                            )
-                                          ],
-                                        ),
-                                      ),
-                                    ),
-                                    SizedBox(width: 15.0.w),
-                                    InkWell(
-                                      onTap: () {
-                                        homeController.deleteUser(
-                                          homeController.users[index].id,
-                                        );
-                                        homeController.update();
-                                      },
-                                      child: Container(
-                                        height: 32.0.h,
-                                        width: 96.0.w,
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 12.0.w,
-                                            vertical: 8.0.h),
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: const Color(0xFF304FFF)
-                                                .withOpacity(.10),
                                           ),
-                                          borderRadius:
-                                              BorderRadius.circular(5.0),
-                                        ),
-                                        child: Row(
-                                          children: [
-                                            Image.asset(
-                                              'assets/icons/Trash.png',
-                                              height: 16.0.h,
-                                              width: 16.0.w,
-                                            ),
-                                            SizedBox(width: 10.0.w),
-                                            Text(
-                                              'Delete',
-                                              style: GoogleFonts.poppins(
-                                                  fontWeight: FontWeight.normal,
-                                                  fontSize: 14,
-                                                  color: Colors.black
-                                                      .withOpacity(.65)),
-                                            )
-                                          ],
-                                        ),
+                                        ],
                                       ),
-                                    ),
-                                  ],
-                                ).paddingOnly(left: 61.0),
-                                SizedBox(height: 12.0.h),
-                                Divider(
-                                  color: Colors.grey.withOpacity(.5),
-                                ),
-                              ],
-                            );
-                          },
-                        ),
-                        SizedBox(height: 24.0.h),
-                        InkWell(
-                          onTap: () {
-                            homeController.loadMore();
-                          },
-                          child: Center(
-                            child: Container(
-                              width: 105.0.w,
-                              height: 38.0.h,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(4.0),
-                                color: Color(0xFF304FFF).withOpacity(.11),
+                                      Row(
+                                        children: [
+                                          InkWell(
+                                            onTap: () {
+                                              homeController.getUserdata(
+                                                  homeController
+                                                      .users[index].id,
+                                                  "edit");
+                                            },
+                                            child: Container(
+                                              height: 32.0.h,
+                                              width: 75.0.w,
+                                              padding:
+                                                  const EdgeInsets.all(8.0),
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: const Color(0xFF304FFF)
+                                                      .withOpacity(.10),
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(5.0),
+                                              ),
+                                              child: Row(
+                                                children: [
+                                                  Image.asset(
+                                                    'assets/icons/PencilSimple.png',
+                                                    height: 16.0.h,
+                                                    width: 16.0.w,
+                                                  ),
+                                                  SizedBox(width: 10.0.w),
+                                                  Text(
+                                                    'Edit',
+                                                    style: GoogleFonts.poppins(
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                        fontSize: 14,
+                                                        color: Colors.black
+                                                            .withOpacity(.65)),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(width: 15.0.w),
+                                          InkWell(
+                                            onTap: () {
+                                              homeController.getUserdata(
+                                                  homeController
+                                                      .users[index].id,
+                                                  "view");
+                                            },
+                                            child: Container(
+                                              height: 32.0.h,
+                                              width: 75.0.w,
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 12.0.w,
+                                                  vertical: 8.0.h),
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: const Color(0xFF304FFF)
+                                                      .withOpacity(.10),
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(5.0),
+                                              ),
+                                              child: Row(
+                                                children: [
+                                                  Image.asset(
+                                                    'assets/icons/Eye.png',
+                                                    height: 16.0.h,
+                                                    width: 16.0.w,
+                                                  ),
+                                                  SizedBox(width: 10.0.w),
+                                                  Text(
+                                                    'View',
+                                                    style: GoogleFonts.poppins(
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                        fontSize: 14,
+                                                        color: Colors.black
+                                                            .withOpacity(.65)),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                          SizedBox(width: 15.0.w),
+                                          InkWell(
+                                            onTap: () {
+                                              homeController.deleteUser(
+                                                homeController.users[index].id,
+                                              );
+                                              homeController.update();
+                                            },
+                                            child: Container(
+                                              height: 32.0.h,
+                                              width: 96.0.w,
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: 12.0.w,
+                                                  vertical: 8.0.h),
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: const Color(0xFF304FFF)
+                                                      .withOpacity(.10),
+                                                ),
+                                                borderRadius:
+                                                    BorderRadius.circular(5.0),
+                                              ),
+                                              child: Row(
+                                                children: [
+                                                  Image.asset(
+                                                    'assets/icons/Trash.png',
+                                                    height: 16.0.h,
+                                                    width: 16.0.w,
+                                                  ),
+                                                  SizedBox(width: 10.0.w),
+                                                  Text(
+                                                    'Delete',
+                                                    style: GoogleFonts.poppins(
+                                                        fontWeight:
+                                                            FontWeight.normal,
+                                                        fontSize: 14,
+                                                        color: Colors.black
+                                                            .withOpacity(.65)),
+                                                  )
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ).paddingOnly(left: 61.0),
+                                      SizedBox(height: 12.0.h),
+                                      Divider(
+                                        color: Colors.grey.withOpacity(.5),
+                                      ),
+                                    ],
+                                  );
+                                },
                               ),
-                              padding: EdgeInsets.all(8.0),
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    'assets/icons/Spinner.png',
-                                    height: 20.0.h,
-                                    width: 20.0.w,
+                              SizedBox(height: 24.0.h),
+                              InkWell(
+                                onTap: () {
+                                  homeController.loadMore();
+                                },
+                                child: Center(
+                                  child: Container(
+                                    width: 105.0.w,
+                                    height: 38.0.h,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(4.0),
+                                      color: Color(0xFF304FFF).withOpacity(.11),
+                                    ),
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        Image.asset(
+                                          'assets/icons/Spinner.png',
+                                          height: 20.0.h,
+                                          width: 20.0.w,
+                                        ),
+                                        SizedBox(width: 8.0.w),
+                                        Text(
+                                          'Load More',
+                                          style: GoogleFonts.poppins(
+                                              fontSize: 12.0,
+                                              fontWeight: FontWeight.normal,
+                                              color: Color(0xFF304FFF)),
+                                        )
+                                      ],
+                                    ),
                                   ),
-                                  SizedBox(width: 8.0.w),
-                                  Text(
-                                    'Load More',
-                                    style: GoogleFonts.poppins(
-                                        fontSize: 12.0,
-                                        fontWeight: FontWeight.normal,
-                                        color: Color(0xFF304FFF)),
-                                  )
-                                ],
+                                ),
                               ),
-                            ),
+                              SizedBox(height: 24.0.h),
+                            ],
                           ),
-                        ),
-                        SizedBox(height: 24.0.h),
-                      ],
-                    ),
                   ),
                 ).paddingOnly(top: 243.0.h, left: 18.0.w, right: 18.0.w);
               },
