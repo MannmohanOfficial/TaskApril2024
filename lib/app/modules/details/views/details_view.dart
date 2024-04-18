@@ -12,9 +12,10 @@ class DetailsView extends GetView<DetailsController> {
   const DetailsView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final controller = Get.put(HomeController());
     return Scaffold(
       bottomNavigationBar: InkWell(
-        onTap: () => Get.to(() => const EditView()),
+        onTap: () => controller.getUserdata(controller.userData.id, "edit"),
         child: Container(
           height: 50.0.h,
           decoration: BoxDecoration(

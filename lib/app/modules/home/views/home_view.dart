@@ -151,8 +151,8 @@ class HomeView extends GetView<HomeController> {
                                   children: [
                                     InkWell(
                                       onTap: () {
-                                        homeController.editUserdata(
-                                            homeController.users[index].id);
+                                        homeController.getUserdata(
+                                            homeController.users[index].id, "edit");
                                       },
                                       child: Container(
                                         height: 32.0.h,
@@ -190,7 +190,7 @@ class HomeView extends GetView<HomeController> {
                                     InkWell(
                                       onTap: () {
                                         homeController.getUserdata(
-                                            homeController.users[index].id);
+                                            homeController.users[index].id, "view");
                                       },
                                       child: Container(
                                         height: 32.0.h,

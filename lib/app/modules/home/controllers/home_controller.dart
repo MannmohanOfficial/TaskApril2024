@@ -51,7 +51,7 @@ class HomeController extends GetxController {
     });
   }
 
-  Future<void> editUserdata(userId) async {
+  Future<void> getUserdata(userId, from) async {
     userRepository.getUserDetails(userId).then(
       (value) {
         if (value != null) {
@@ -60,27 +60,15 @@ class HomeController extends GetxController {
           emailController.text = userData.email!;
           genderController.text = userData.gender!;
           statusController.text = userData.status!;
-          update();
-          Get.to(
-            () => const EditView(),
-          );
-        }
-      },
-    );
-  }
+          if (from == "view") {
+            Get.to(
+                  () => const DetailsView(),
+            );
+          } else {
+            Get.to(
+                    () => const EditView(),);
+          }
 
-  Future<void> getUserdata(userId) async {
-    userRepository.getUserDetails(userId).then(
-      (value) {
-        if (value != null) {
-          userData = UserModel.fromJson(value.responseBody);
-          nameController.text = userData.name!;
-          emailController.text = userData.email!;
-          genderController.text = userData.gender!;
-          statusController.text = userData.status!;
-          Get.to(
-            () => const DetailsView(),
-          );
         }
       },
     );
